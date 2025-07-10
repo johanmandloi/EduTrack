@@ -1,0 +1,183 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "EduTrack Student Management API",
+    "version": "1.0.0",
+    "description": "API documentation for EduTrack Student Management System"
+  },
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "role": { "type": "string", "enum": ["student", "faculty", "admin"] }
+                },
+                "required": ["email", "password", "role"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User registered" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Returns JWT token" }
+        }
+      }
+    },
+    "/courses": {
+      "post": {
+        "summary": "Create a new course",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "faculty_id": { "type": "integer" }
+                },
+                "required": ["title", "description", "faculty_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Course created" }
+        }
+      },
+      "get": {
+        "summary": "Get all courses",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "List of courses" }
+        }
+      }
+    },
+    "/enrollments": {
+      "post": {
+        "summary": "Enroll student in course",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "student_id": { "type": "integer" },
+                  "course_id": { "type": "integer" }
+                },
+                "required": ["student_id", "course_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Student enrolled" }
+        }
+      }
+    },
+    "/grades": {
+      "post": {
+        "summary": "Add grade",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "student_id": { "type": "integer" },
+                  "course_id": { "type": "integer" },
+                  "grade": { "type": "string" }
+                },
+                "required": ["student_id", "course_id", "grade"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Grade added" }
+        }
+      }
+    },
+    "/attendence": {
+      "post": {
+        "summary": "Mark attendence",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "student_id": { "type": "integer" },
+                  "course_id": { "type": "integer" },
+                  "status": { "type": "string", "enum": ["present", "absent"] }
+                },
+                "required": ["student_id", "course_id", "status"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Attendence marked" }
+        }
+      }
+    },
+    "/reports/student/{id}": {
+      "get": {
+        "summary": "Get student performance report",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Student performance data" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
