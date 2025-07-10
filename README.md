@@ -43,7 +43,7 @@ Edu-Track is a Node.js-based student management system that supports:
 
 ### Clone & Install
 ```bash
-git clone https://github.com/akshatmhjj/EduTrack.git
+git clone https://github.com/johanmandloi/EduTrack.git
 cd Edu-Track
 npm install
 ````
@@ -109,6 +109,6 @@ Use Postman collection (provided separately) to:
 
 ---
 
-**Author:** akshatmhjj
-**Repo:** [Edu-Track](https://github.com/akshatmhjj/EduTrack)
+**Author:** johanmandloi
+**Repo:** [Edu-Track](https://github.com/johanmandloi/EduTrack)
 
